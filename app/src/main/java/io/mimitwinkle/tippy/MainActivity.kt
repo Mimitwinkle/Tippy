@@ -1,11 +1,9 @@
 package io.mimitwinkle.tippy
 
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
@@ -18,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipPercent : TextView
     private lateinit var tvTipAmount : TextView
     private lateinit var tvTotalAmount : TextView
+    private lateinit var tvTipDescription : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         tvTipPercent = findViewById(R.id.tvTipPercentLabel)
         tvTipAmount = findViewById(R.id.tvTipAmount)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
+        tvTipDescription = findViewById(R.id.tvTipDescription)
 
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercent.text = "$INITIAL_TIP_PERCENT%"
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 //Log.i(TAG, "onProgressChanged: $progress")
                 tvTipPercent.text = "$progress%"
                 computeTipAndTotal()
+                updateTipDescription(progress)
             }
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun updateTipDescription(tipPercent: Int) {
+        TODO("Not yet implemented")
     }
 
     private fun computeTipAndTotal() {
@@ -70,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         val totalAmount = baseAmount + tipAmount
 
         // Display results
-        tvTipAmount.text = tipAmount.toString()
-        tvTotalAmount.text = totalAmount.toString()
+        tvTipAmount.text = "%.2f".format(tipAmount)
+        tvTotalAmount.text = "%.2f".format(totalAmount)
     }
 }
