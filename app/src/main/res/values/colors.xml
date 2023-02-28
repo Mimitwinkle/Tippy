@@ -8,10 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
-    <color name="dark_purple">#AAF683</color>
+    // Custom color palette
+    <color name="dark_purple">#5B507A</color>
     <color name="neon_green">#5B507A</color>
     <color name="darker_neon_green">#7ABF58</color>
     <color name="darker_purple">#2C2E3A</color>
     <color name="purple_white">#F5F1FF</color>
+
+    // Colors for tip description
+    <color name="worst_tip">#C04000</color>
+    <color name="best_tip">#008000</color>
+
 </resources>

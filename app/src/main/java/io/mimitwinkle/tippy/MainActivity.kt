@@ -1,5 +1,6 @@
 package io.mimitwinkle.tippy
 
+import android.animation.ArgbEvaluator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -7,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
@@ -30,10 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercent.text = "$INITIAL_TIP_PERCENT%"
-
+        updateTipDescription(INITIAL_TIP_PERCENT)
         seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                //Log.i(TAG, "onProgressChanged: $progress")
                 tvTipPercent.text = "$progress%"
                 computeTipAndTotal()
                 updateTipDescription(progress)
@@ -47,15 +48,28 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                //Log.i(TAG, "afterTextChanged $s")
                 computeTipAndTotal()
             }
-
         })
     }
 
     private fun updateTipDescription(tipPercent: Int) {
-        TODO("Not yet implemented")
+        val tipDescription = when (tipPercent) {
+            in 0..9 -> "Poor"
+            in 10..14 -> "Acceptable"
+            in 15..19 -> "Good"
+            in 20..24 -> "Great"
+            else -> "Amazing"
+        }
+        tvTipDescription.text = tipDescription
+
+        val color = ArgbEvaluator().evaluate(
+            tipPercent.toFloat() / seekBarTip.max,
+            ContextCompat.getColor(this, R.color.worst_tip),
+            ContextCompat.getColor(this,R.color.best_tip)
+        ) as Int
+
+        tvTipDescription.setTextColor(color)
     }
 
     private fun computeTipAndTotal() {
