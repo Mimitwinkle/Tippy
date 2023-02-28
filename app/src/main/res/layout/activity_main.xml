@@ -53,7 +53,7 @@
     <!-- Views on right side -->
     <EditText
         android:id="@+id/etBaseAmount"
-        android:layout_width="300dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:ems="10"
